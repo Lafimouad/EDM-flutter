@@ -1,0 +1,76 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run
+
+## exception
+
+NoSuchMethodError: NoSuchMethodError: The getter 'assetPathsToEvict' was called on null.
+Receiver: null
+Tried calling: assetPathsToEvict
+
+```
+#0      Object.noSuchMethod (dart:core-patch/object_patch.dart:54:5)
+#1      HotRunner._resetDirtyAssets (package:flutter_tools/src/run_hot.dart:436:20)
+#2      HotRunner._restartFromSources (package:flutter_tools/src/run_hot.dart:499:5)
+<asynchronous suspension>
+#3      HotRunner._fullRestartHelper (package:flutter_tools/src/run_hot.dart:689:16)
+<asynchronous suspension>
+#4      HotRunner.restart (package:flutter_tools/src/run_hot.dart:637:38)
+<asynchronous suspension>
+#5      TerminalHandler._commonTerminalInputHandler (package:flutter_tools/src/resident_runner.dart:1602:40)
+<asynchronous suspension>
+#6      TerminalHandler.processTerminalInput (package:flutter_tools/src/resident_runner.dart:1644:7)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, 2.2.2, on Microsoft Windows [Version 10.0.19042.572], locale en-US)
+    • Flutter version 2.2.2 at C:\Users\mouad\Documents\flutter
+    • Framework revision d79295af24 (7 weeks ago), 2021-06-11 08:56:01 -0700
+    • Engine revision 91c9fc8fe0
+    • Dart version 2.13.3
+
+[!] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
+    • Android SDK at C:\Users\mouad\AppData\Local\Android\sdk
+    • Platform android-30, build-tools 30.0.3
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 11.0.8+10-b944.6842174)
+    ✗ Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/docs/get-started/install/windows#android-setup for more details.
+
+[✓] Chrome - develop for the web
+    • Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+
+[✓] Android Studio (version 4.1.0)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    • Java version OpenJDK Runtime Environment (build 11.0.8+10-b944.6842174)
+
+[✓] IntelliJ IDEA Ultimate Edition (version 2020.3)
+    • IntelliJ at C:\Program Files\JetBrains\IntelliJ IDEA 2020.3.2
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+
+[✓] VS Code (version 1.58.2)
+    • VS Code at C:\Users\mouad\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.24.0
+
+[✓] Connected device (3 available)
+    • SM G532F (mobile) • 4200c6b94f6b1459 • android-arm    • Android 6.0.1 (API 23)
+    • Chrome (web)      • chrome           • web-javascript • Google Chrome 92.0.4515.107
+    • Edge (web)        • edge             • web-javascript • Microsoft Edge 92.0.902.62
+    ! Device 4200c6b94f6b1459 is offline.
+
+! Doctor found issues in 1 category.
+```

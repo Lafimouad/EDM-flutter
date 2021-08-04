@@ -1,0 +1,66 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.flutter_auth"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="18"
+9        android:targetSdkVersion="28" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:9:5-67
+14-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:9:22-64
+15
+16    <application
+16-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:10:5-31:19
+17        android:name="io.flutter.app.FlutterApplication"
+17-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:11:9-57
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.1.0] C:\Users\mouad\.gradle\caches\transforms-2\files-2.1\a528b13ac93e64cafa3d0480e2c93207\core-1.1.0\AndroidManifest.xml:24:18-86
+19        android:debuggable="true"
+20        android:icon="@mipmap/ic_launcher"
+20-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:13:9-43
+21        android:label="flutter_auth" >
+21-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:12:9-37
+22        <activity
+22-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:14:9-25:20
+23            android:name="com.example.flutter_auth.MainActivity"
+23-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:15:13-41
+24            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+24-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:18:13-163
+25            android:hardwareAccelerated="true"
+25-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:19:13-47
+26            android:launchMode="singleTop"
+26-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:16:13-43
+27            android:theme="@style/LaunchTheme"
+27-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:17:13-47
+28            android:windowSoftInputMode="adjustResize" >
+28-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:20:13-55
+29            <intent-filter>
+29-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:21:13-24:29
+30                <action android:name="android.intent.action.MAIN" />
+30-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:22:17-68
+30-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:22:25-66
+31
+32                <category android:name="android.intent.category.LAUNCHER" />
+32-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:23:17-76
+32-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:23:27-74
+33            </intent-filter>
+34        </activity>
+35        <!--
+36             Don't delete the meta-data below.
+37             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+38        -->
+39        <meta-data
+39-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:28:9-30:33
+40            android:name="flutterEmbedding"
+40-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:29:13-44
+41            android:value="2" />
+41-->C:\Users\mouad\Desktop\EDM-flutter\android\app\src\main\AndroidManifest.xml:30:13-30
+42    </application>
+43
+44</manifest>
