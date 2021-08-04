@@ -24,7 +24,10 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_svg: ^0.19.1
   form_field_validator: ^1.0.1
+  jwt_decode: ^0.3.1
+
   http: ^0.13.3
+
 
 
 

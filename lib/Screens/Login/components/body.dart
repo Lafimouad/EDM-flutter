@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Login/components/background.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
+import 'package:flutter_auth/Screens/UserScreen/user_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
@@ -12,6 +12,7 @@ import 'package:flutter_auth/main.dart';
 import 'package:flutter_auth/userlogin.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 
 class Login extends StatelessWidget {
   //validator
@@ -115,11 +116,19 @@ class Login extends StatelessWidget {
                     print(this.user.login);
                     print(this.user.password);
                     var jwt = await Signin(user.login, user.password);
+                    Map<String, dynamic> payload = Jwt.parseJwt(jwt);
+                    print(payload);
                     if (jwt != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WelcomeScreen()));
+                      if (payload['role'] == 'ROLE_USER') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserScreen()));
+                      } if(payload['role'] != 'ROLE_USER')
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WelcomeScreen()));
                     } else {
                       AlertDialog(
                           title: Text(

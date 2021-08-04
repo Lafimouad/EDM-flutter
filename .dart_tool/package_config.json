@@ -98,6 +98,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "jwt_decode",
+      "rootUri": "file:///C:/Users/mouad/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/jwt_decode-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///C:/Users/mouad/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.10",
       "packageUri": "lib/",
@@ -206,7 +212,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-08-04T03:20:22.158055Z",
+  "generated": "2021-08-04T04:31:41.510139Z",
   "generator": "pub",
   "generatorVersion": "2.13.3"
 }
