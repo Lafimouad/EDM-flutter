@@ -24,7 +24,7 @@ class Login extends StatelessWidget {
   User user = User("", "");
   var url = Uri.parse('http://192.168.1.20:9009/user/signin');
   Map<String, String> headers = {"Content-Type": "application/json"};
-
+  // attempt to signin
   Future<String> Signin(String username, String password) async {
     print('Signin start working');
     var res = await http.post(url,
@@ -39,6 +39,15 @@ class Login extends StatelessWidget {
       return (res.body);
     }
   }
+  // dialogue
+  void displayDialog(context, title, text) => showDialog(
+      context: context,
+      builder: (context) =>
+        AlertDialog(
+          title: Text(title),
+          content: Text(text)
+        ),
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +125,8 @@ class Login extends StatelessWidget {
                     print(this.user.login);
                     print(this.user.password);
                     var jwt = await Signin(user.login, user.password);
+                    storage.write(key: "jwt", value: jwt);
+
                     Map<String, dynamic> payload = Jwt.parseJwt(jwt);
                     print(payload);
                     if (jwt != null) {
@@ -123,17 +134,15 @@ class Login extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UserScreen()));
-                      } if(payload['role'] != 'ROLE_USER')
+                                builder: (context) => UserScreen(jwt:jwt)));
+                      } 
+                    }
+                    
+                    else {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => WelcomeScreen()));
-                    } else {
-                      AlertDialog(
-                          title: Text(
-                              "An Error Occurred! NO account was found matching that username and password"));
-                    }
+                                builder: (context) => WelcomeScreen()));                    }
                   }
                   ;
                 }),

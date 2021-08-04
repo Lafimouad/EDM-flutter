@@ -25,7 +25,7 @@ dependencies:
   flutter_svg: ^0.19.1
   form_field_validator: ^1.0.1
   jwt_decode: ^0.3.1
-
+  flutter_secure_storage: ^3.3.1+1
   http: ^0.13.3
 
 
