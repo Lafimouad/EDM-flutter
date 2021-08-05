@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Admin/admin_screen.dart';
 import 'package:flutter_auth/Screens/Login/components/background.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/Screens/UserScreen/user_screen.dart';
+import 'package:flutter_auth/Screens/User/user_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
@@ -126,7 +127,6 @@ class Login extends StatelessWidget {
                     print(this.user.password);
                     var jwt = await Signin(user.login, user.password);
                     storage.write(key: "jwt", value: jwt);
-
                     Map<String, dynamic> payload = Jwt.parseJwt(jwt);
                     print(payload);
                     if (jwt != null) {
@@ -136,6 +136,18 @@ class Login extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => UserScreen(jwt:jwt)));
                       } 
+                      if (payload['role'] == 'ROLE_ADMIN') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminScreen(jwt:jwt)));
+                      } 
+                      if (payload['role'] == 'ROLE_RH') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
+                      }
                     }
                     
                     else {
@@ -144,7 +156,7 @@ class Login extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => WelcomeScreen()));                    }
                   }
-                  ;
+                  
                 }),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
