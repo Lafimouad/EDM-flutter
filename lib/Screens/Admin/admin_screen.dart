@@ -8,13 +8,15 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:http/http.dart' as http;
 
 //url
-var url = Uri.parse('http://192.168.1.20:9009/user/getRHUsers');
+var url = Uri.parse('http://192.168.1.21:9009/user/getRHUsers');
 //get all user
 Future<List<User>> getUsers() async {
   final response = await http.get(url);
   if (response.statusCode == 200) {
     var getUsersData = json.decode(response.body) as List;
+    print(getUsersData);
     var listUsers = getUsersData.map((i) => User.fromJSON(i)).toList();
+    print(listUsers);
     return listUsers;
   } else {
     throw Exception("Invalid Request");
@@ -24,7 +26,7 @@ Future<List<User>> getUsers() async {
 class AdminScreen extends StatefulWidget {
   var jwt;
 
-  AdminScreen({Key key, @required this.jwt}) : super(key: key);
+  AdminScreen({Key key, this.jwt}) : super(key: key);
 
   @override
   _AdminScreenState createState() => _AdminScreenState();
@@ -81,8 +83,9 @@ class _AdminScreenState extends State<AdminScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateScreen(user:user,)),
+                                            builder: (context) => UpdateScreen(
+                                                  user: user,
+                                                )),
                                       );
                                     },
                                     leading: CircleAvatar(

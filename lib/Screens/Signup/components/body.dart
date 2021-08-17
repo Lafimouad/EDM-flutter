@@ -35,7 +35,7 @@ class _SignUpState extends State<SignUp> {
   bool _validatelogin = false;
   //http
   User user = User("", "", "", "", "");
-  var url = Uri.parse('http://192.168.1.20:9009/user/signup');
+  var url = Uri.parse('http://192.168.1.21:9009/user/signup');
   Map<String, String> headers = {"Content-Type": "application/json"};
 
   Future save() async {

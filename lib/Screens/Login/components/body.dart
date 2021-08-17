@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Admin/admin_screen.dart';
 import 'package:flutter_auth/Screens/Login/components/background.dart';
+import 'package:flutter_auth/Screens/RH/rh_screen.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/User/user_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
@@ -23,7 +24,7 @@ class Login extends StatelessWidget {
   bool _validatelogin = false;
   //http
   User user = User("", "");
-  var url = Uri.parse('http://192.168.1.20:9009/user/signin');
+  var url = Uri.parse('http://192.168.1.21:9009/user/signin');
   Map<String, String> headers = {"Content-Type": "application/json"};
   // attempt to signin
   Future<String> Signin(String username, String password) async {
@@ -146,7 +147,7 @@ class Login extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpScreen()));
+                                builder: (context) => RhScreen()));
                       }
                     }
                     

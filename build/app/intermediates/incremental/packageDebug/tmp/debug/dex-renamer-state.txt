@@ -1,4 +1,4 @@
-#Thu Aug 12 07:38:29 WAT 2021
-base.0=C\:\\Users\\mouad\\Desktop\\EDM-flutter\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Tue Aug 17 11:26:44 WAT 2021
+base.0=C\:\\Users\\mouad\\Desktop\\flutter_auth\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
