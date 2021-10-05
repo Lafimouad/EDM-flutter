@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Admin/admin_screen.dart';
 import 'package:flutter_auth/Screens/Login/components/background.dart';
+import 'package:flutter_auth/Screens/Portal/PortalScreen.dart';
 import 'package:flutter_auth/Screens/RH/rh_screen.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/User/user_screen.dart';
@@ -12,28 +13,38 @@ import 'package:flutter_auth/components/text_field_container.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/main.dart';
 import 'package:flutter_auth/userlogin.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   //validator
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final _textpass = TextEditingController();
+
   final _textlogin = TextEditingController();
+
   bool _validatepass = false;
+
   bool _validatelogin = false;
-  //http
+  String publicKey;
+
   User user = User("", "");
-  var url = Uri.parse('http://192.168.1.21:9009/user/signin');
+
+  var url = Uri.parse('$BaseUrl/user/signin');
+
   Map<String, String> headers = {"Content-Type": "application/json"};
-  // attempt to signin
+
   Future<String> Signin(String username, String password) async {
     print('Signin start working');
+    print('$url');
     var res = await http.post(url,
         headers: this.headers,
         body: json.encode({'login': username, 'password': password}));
     print("save is working");
-    print(res.body);
     if (res.statusCode == 405) {
       AlertDialog(title: Text("Please Verify your Account"));
       return null;
@@ -41,15 +52,24 @@ class Login extends StatelessWidget {
       return (res.body);
     }
   }
-  // dialogue
+
+  void getUserBylogin(String login) async {
+    print("getuser start");
+    var res = await http.get(Uri.parse('$BaseUrl/user/getUserByLogin/$login'));
+    final Map<String, dynamic> responseJson = json.decode(res.body);
+    setState(() {
+      publicKey = responseJson['publicKey'];
+    });
+        print("getuser worked");
+
+    print(publicKey);
+  }
+
   void displayDialog(context, title, text) => showDialog(
-      context: context,
-      builder: (context) =>
-        AlertDialog(
-          title: Text(title),
-          content: Text(text)
-        ),
-    );
+        context: context,
+        builder: (context) =>
+            AlertDialog(title: Text(title), content: Text(text)),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -59,20 +79,17 @@ class Login extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Image.asset(
+              "assets/icons/coffre-fort-logo.png",
+              height: size.height * 0.45,
             ),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
-            ),
-            SizedBox(height: size.height * 0.03),
             //login Input
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validatelogin = false;
+                  });
                   user.login = val;
                   print(user.login);
                 },
@@ -93,6 +110,9 @@ class Login extends StatelessWidget {
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validatepass = false;
+                  });
                   user.password = val;
                 },
                 obscureText: true,
@@ -116,48 +136,62 @@ class Login extends StatelessWidget {
             RoundedButton(
                 text: "LOGIN",
                 press: () async {
-                  _textlogin.text.isEmpty
-                      ? _validatelogin = true
-                      : _validatelogin = false;
-                  _textpass.text.isEmpty
-                      ? _validatepass = true
-                      : _validatepass = false;
+                  setState(() {
+                    _textlogin.text.isEmpty
+                        ? _validatelogin = true
+                        : _validatelogin = false;
+                    _textpass.text.isEmpty
+                        ? _validatepass = true
+                        : _validatepass = false;
+                  });
 
                   if (!_validatelogin && !_validatepass) {
-                    print(this.user.login);
-                    print(this.user.password);
+                    
+                    print(publicKey);
+                    print("ye mouadhhhhh");
+
+                    setState(() {
+                      publicKey = null;
+                    });
+                    getUserBylogin(user.login);
+                    print(publicKey);
                     var jwt = await Signin(user.login, user.password);
                     storage.write(key: "jwt", value: jwt);
                     Map<String, dynamic> payload = Jwt.parseJwt(jwt);
-                    print(payload);
+
                     if (jwt != null) {
-                      if (payload['role'] == 'ROLE_USER') {
+                      if (payload['role'] == 'ROLE_USER' && publicKey != null) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UserScreen(jwt:jwt)));
-                      } 
+                                builder: (context) => UserScreen(jwt: jwt)));
+                      }
+                      if (payload['role'] == 'ROLE_USER' && publicKey == null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PortalScreen(jwt: jwt)));
+                      }
+
                       if (payload['role'] == 'ROLE_ADMIN') {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AdminScreen(jwt:jwt)));
-                      } 
+                                builder: (context) => AdminScreen(jwt: jwt)));
+                      }
                       if (payload['role'] == 'ROLE_RH') {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => RhScreen()));
                       }
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
                     }
-                    
-                    else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => WelcomeScreen()));                    }
                   }
-                  
                 }),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

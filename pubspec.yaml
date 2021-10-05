@@ -27,6 +27,11 @@ dependencies:
   jwt_decode: ^0.3.1
   flutter_secure_storage: ^3.3.1+1
   http: ^0.13.3
+  file_picker: ^1.9.0+1
+  async: ^2.6.1
+  path_provider: ^2.0.2
+  universal_html: ^2.0.8
+  permission_handler: ^8.1.4+2
 
 
 dev_dependencies:

@@ -8,6 +8,7 @@ import 'package:flutter_auth/Screens/Signup/components/social_icon.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/text_field_container.dart';
+import 'package:flutter_auth/main.dart';
 import 'package:flutter_auth/user.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
@@ -33,9 +34,12 @@ class _SignUpState extends State<SignUp> {
   bool _validatename = false;
   bool _validatelast = false;
   bool _validatelogin = false;
+  //pass 
+    bool _obscureText = true;
+
   //http
   User user = User("", "", "", "", "");
-  var url = Uri.parse('http://192.168.1.21:9009/user/signup');
+  var url = Uri.parse('$BaseUrl/user/signup');
   Map<String, String> headers = {"Content-Type": "application/json"};
 
   Future save() async {
@@ -72,6 +76,11 @@ class _SignUpState extends State<SignUp> {
     _text.dispose();
     super.dispose();
   }
+   void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,21 +90,25 @@ class _SignUpState extends State<SignUp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: size.height * 0.03),
+
             Text(
               "SIGNUP",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/signup.svg",
-              height: size.height * 0.55,
+            Image.asset(
+              "assets/icons/coffre-fort-logo.png",
+              height: size.height * 0.45,
             ),
             //login Input
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
                   user.login = val;
-                  print(user.login);
+                  setState(() {
+                    _validatelogin = false;
+                  });
                 },
                 controller: _textlogin,
                 cursorColor: kPrimaryColor,
@@ -114,6 +127,9 @@ class _SignUpState extends State<SignUp> {
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validatelast = false;
+                  });
                   user.lastName = val;
                 },
                 controller: _textlast,
@@ -124,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                     color: kPrimaryColor,
                   ),
                   errorText: _validatelast ? 'LastName Can\'t Be Empty' : null,
-                  hintText: 'LastName',
+                  hintText: 'Last Name',
                   border: InputBorder.none,
                 ),
               ),
@@ -133,6 +149,9 @@ class _SignUpState extends State<SignUp> {
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validatename = false;
+                  });
                   user.firstName = val;
                 },
                 controller: _textname,
@@ -152,6 +171,9 @@ class _SignUpState extends State<SignUp> {
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validateadress = false;
+                  });
                   user.email = val;
                 },
                 controller: _text,
@@ -161,7 +183,8 @@ class _SignUpState extends State<SignUp> {
                     Icons.email_rounded,
                     color: kPrimaryColor,
                   ),
-                  errorText: _validateadress ? 'email not @talan.com' : null,
+                  errorText:
+                      _validateadress ? 'Use your professional email' : null,
                   hintText: 'Email',
                   border: InputBorder.none,
                 ),
@@ -171,9 +194,12 @@ class _SignUpState extends State<SignUp> {
             TextFieldContainer(
               child: TextField(
                 onChanged: (val) {
+                  setState(() {
+                    _validatepass = false;
+                  });
                   user.password = val;
                 },
-                obscureText: true,
+                obscureText: _obscureText,
                 controller: _textpass,
                 cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
@@ -181,9 +207,10 @@ class _SignUpState extends State<SignUp> {
                     Icons.lock,
                     color: kPrimaryColor,
                   ),
-                  suffixIcon: Icon(
-                    Icons.visibility,
+                  suffixIcon: IconButton(
+                    icon: new Icon(Icons.visibility),
                     color: kPrimaryColor,
+                    onPressed: _toggle,
                   ),
                   errorText: _validatepass ? 'Password can not be Empty' : null,
                   hintText: 'Password',
@@ -241,14 +268,17 @@ class _SignUpState extends State<SignUp> {
                 SocalIcon(
                   iconSrc: "assets/icons/facebook.svg",
                   press: () {},
+                  color: Color.fromRGBO(66, 103, 178, 1),
                 ),
                 SocalIcon(
                   iconSrc: "assets/icons/twitter.svg",
                   press: () {},
+                  color: Colors.blue,
                 ),
                 SocalIcon(
                   iconSrc: "assets/icons/google-plus.svg",
                   press: () {},
+                  color: Color.fromRGBO(219, 74, 57, 1),
                 ),
               ],
             )

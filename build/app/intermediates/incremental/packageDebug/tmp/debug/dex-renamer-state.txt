@@ -1,4 +1,4 @@
-#Tue Aug 17 11:26:44 WAT 2021
+#Wed Sep 29 00:09:06 WAT 2021
 base.0=C\:\\Users\\mouad\\Desktop\\flutter_auth\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

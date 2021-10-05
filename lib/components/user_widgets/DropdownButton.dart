@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/user1.dart';
 
 class changer extends StatefulWidget {
@@ -11,11 +12,10 @@ class changer extends StatefulWidget {
 }
 
 class _changerState extends State<changer> {
-      String dropdownValue;
+  String dropdownValue;
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.all(20),
       child: DropdownButton<String>(
@@ -27,16 +27,17 @@ class _changerState extends State<changer> {
           style: TextStyle(color: Colors.black),
           underline: Container(
             height: 2,
-            color: Colors.deepPurpleAccent,
+            color: kPrimaryColor,
           ),
           onChanged: (String newValue) {
-                          setState(() {
-                dropdownValue = newValue;
-              });
+            setState(() {
+              dropdownValue = newValue;
+            });
 
             if (newValue == 'USER') {
               widget.user.role["name"] = 'USER';
-              widget.user.role["description"]= "USER role";
+              widget.user.role["description"] = "USER role";
+              print(widget.user.role);
             }
             if (newValue == 'ADMIN') {
               widget.user.role["name"] = 'ADMIN';
@@ -47,7 +48,7 @@ class _changerState extends State<changer> {
               widget.user.role["description"] = "RH role";
             }
           },
-          items: <String>['User', 'ADMIN', 'RH']
+          items: <String>['USER', 'ADMIN', 'RH']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

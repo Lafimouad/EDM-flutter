@@ -3,76 +3,80 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Admin/background.dart';
 import 'package:flutter_auth/components/user_widgets/button_widget.dart';
-import 'package:flutter_auth/components/user_widgets/user_profile.dart';
+import 'package:flutter_auth/components/user_widgets/button_widget1.dart';
 import 'package:flutter_auth/components/user_widgets/DropdownButton.dart';
+import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/main.dart';
 import 'package:flutter_auth/user1.dart';
 import 'package:http/http.dart' as http;
 
-class UpdateScreen extends StatelessWidget {
+class UpdateScreen extends StatefulWidget {
   User user;
   //http activation
-  Future activate(String login) async {
-    print('activate is working');
-    var res = await http
-        .post(Uri.parse('http://192.168.1.21:9009/user/activateUser/$login'));
-    print("save is working");
-    print(res.body);
-    if (res.statusCode == 200) {
-      AlertDialog(title: Text("Account Activated"));
-    }
-
-  }
-  //http update role
-    Map<String, String> headers = {"Content-Type": "application/json"};
-
-    Future updateRole(User user) async {
-      print("update is working");
-      var res = await http.post(
-          Uri.parse(
-              'http://192.168.1.21:9009/user/updateUserInfo'),
-          headers: headers,
-          body: json.encode(user.toMap()));
-      print(user.role);
-      print(res.body);
-      if (res.statusCode == 200) {
-        AlertDialog(title: Text("change done"));
-      }
-      return res.body;
-    }
-
   UpdateScreen({Key key, @required this.user}) : super(key: key);
 
   @override
+  _UpdateScreenState createState() => _UpdateScreenState();
+}
+
+class _UpdateScreenState extends State<UpdateScreen> {
+  void updateUI() {
+    setState(() {
+      //You can also make changes to your state here.
+    });
+  }
+
+  Future<int> activate(String login) async {
+    print('activate is working');
+    var res = await http
+        .post(Uri.parse('$BaseUrl/user/activateUser/$login'));
+    print("save is working");
+    print(res.body);
+    if (res.statusCode == 200) {
+      return (res.statusCode);
+    }
+  }
+
+  Map<String, String> headers = {"Content-Type": "application/json"};
+
+  Future updateRole(User user) async {
+    print("update is working");
+    var res = await http.post(
+        Uri.parse('$BaseUrl/user/updateUserInfo'),
+        headers: headers,
+        body: json.encode(user.toMap()));
+    print(user.role);
+    print(res.body);
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    }
+    return res.body;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var a = user.login;
-    var bool = user.activated;
+    var a = widget.user.login;
+    var bool = widget.user.activated;
 
     // This size provide us total height and width of our screen
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        title: Text("Admin"),
-        centerTitle: true,
-      ),
       body: Background(
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
             const SizedBox(height: 24),
             CircleAvatar(
-              backgroundColor: Colors.blue,
-              child: Text(user.firstName[0]),
+              backgroundColor: kPrimaryColor,
+              child: Text(widget.user.firstName[0]),
             ),
             const SizedBox(height: 24),
-            buildName(user),
+            buildName(widget.user),
             const SizedBox(height: 24),
             Center(child: buildUpgradeButton()),
             const SizedBox(height: 24),
             const SizedBox(height: 48),
-            buildAbout(user),
-            changer(user: user),
+            buildAbout(widget.user),
+            changer(user: widget.user),
             const SizedBox(height: 24),
             Center(child: builduButton()),
           ],
@@ -99,12 +103,12 @@ class UpdateScreen extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           user.activated
-              ? Text("Validé",
+              ? Text("Validated",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                       fontSize: 20))
-              : Text("No Validé",
+              : Text("Not Validated",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.red,
@@ -113,19 +117,28 @@ class UpdateScreen extends StatelessWidget {
       );
 
   Widget buildUpgradeButton() => ButtonWidget(
-        text: user.activated ? 'Activated' : 'Activate',
-        user: user,
+        text: widget.user.activated ? 'Activated' : 'Activate',
+        user: widget.user,
         onClicked: () async {
-          if (user.activated == false) {
-            activate(user.login);
+          if (widget.user.activated == false) {
+            activate(widget.user.login);
+            widget.user.activated = true;
+            updateUI();
           }
         },
       );
-  Widget builduButton() => ButtonWidget(
+
+  Widget builduButton() => ButtonWidget1(
         text: 'Confirm',
-        user: user,
+        user: widget.user,
         onClicked: () async {
-          updateRole(user);
+          var res = updateRole(widget.user);
+          if (res == 200) {
+            print("jawwek bien ye bro");
+            print(res);
+            widget.user.activated = true;
+          }
+          updateUI();
         },
       );
 
@@ -136,11 +149,10 @@ class UpdateScreen extends StatelessWidget {
           children: [
             Text(
               'Change Role : ',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
           ],
         ),
       );
 }
-    

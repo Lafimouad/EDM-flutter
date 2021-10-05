@@ -15,10 +15,6 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "WELCOME TO EDM",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: size.height * 0.05),
             Image.asset(
               "assets/icons/coffre-fort-logo.png",

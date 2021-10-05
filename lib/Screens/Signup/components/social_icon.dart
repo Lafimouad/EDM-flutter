@@ -5,10 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class SocalIcon extends StatelessWidget {
   final String iconSrc;
   final Function press;
+  final Color color;
   const SocalIcon({
     Key key,
     this.iconSrc,
     this.press,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -25,11 +27,7 @@ class SocalIcon extends StatelessWidget {
           ),
           shape: BoxShape.circle,
         ),
-        child: SvgPicture.asset(
-          iconSrc,
-          height: 20,
-          width: 20,
-        ),
+        child: SvgPicture.asset(iconSrc, height: 20, width: 20, color: color),
       ),
     );
   }
