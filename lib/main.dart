@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 final storage = FlutterSecureStorage();
-final BaseUrl='http://192.168.1.24:9019';
+final BaseUrl='http://192.168.1.26:9019';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
